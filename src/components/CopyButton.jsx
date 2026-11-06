@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Icon from "./Icons.jsx";
 
 export async function copyText(text) {
   if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
@@ -30,7 +31,8 @@ export default function CopyButton({ text, label = "Copy", className = "" }) {
     setTimeout(() => setState("idle"), 2000);
   };
   return (
-    <button type="button" className={`copy ${className}`} onClick={onClick} aria-label={label}>
+    <button type="button" className={`btn ghost sm copy ${state === "done" ? "copied" : ""} ${className}`} onClick={onClick} aria-label={label}>
+      <Icon name={state === "done" ? "check" : "copy"} size={15} />
       {state === "done" ? "Copied ✓" : state === "fail" ? "Copy failed" : label}
     </button>
   );

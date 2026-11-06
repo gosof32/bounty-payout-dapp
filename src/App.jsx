@@ -5,12 +5,13 @@ import {
   writeAndFinalize as defaultWrite,
 } from "./lib/wallet.js";
 import {
-  formatGen, parseRoute, readBounties as defaultReadBounties, readBounty as defaultReadBounty, readClaims as defaultReadClaims,
+  formatGen, formatReward, parseRoute, readBounties as defaultReadBounties, readBounty as defaultReadBounty, readClaims as defaultReadClaims,
 } from "./lib/bounty.js";
 import BountyList from "./components/BountyList.jsx";
 import BountyDetail from "./components/BountyDetail.jsx";
 import CreateBounty from "./components/CreateBounty.jsx";
 import TxLog, { short } from "./components/TxLog.jsx";
+import Icon from "./components/Icons.jsx";
 
 const TABS = [
   ["list", "Bounties", "#/"],
@@ -149,70 +150,78 @@ export default function App({
 
   const shownDetail = detail && route.name === "bounty" && detail.id === route.id ? detail : null;
   const tabKey = route.name === "bounty" ? "list" : route.name;
+  const isList = route.name === "list";
+  const wide = isList || route.name === "bounty";
 
   return (
     <div className="app">
-      <header className="top">
-        <div className="brand">
-          <span className="logo" aria-hidden>◆</span>
-          <div>
-            <h1><a href="#/" className="home">Bounty Payout</a></h1>
-            <p className="muted small">
-              GitHub bounties judged by GenLayer validators · contract{" "}
-              <a href={`${EXPLORER_BASE}/address/${contractAddress}`} target="_blank" rel="noreferrer">
-                {short(contractAddress)}
-              </a>{" "}on Studionet
-            </p>
-          </div>
-        </div>
+      <div className="bg-fx" aria-hidden="true" />
+      <header className={`top${wallet ? " connected" : ""}`}>
+        <a href="#/" className="brand" aria-label="Bounty Payout home">
+          <span className="logo"><Icon name="logo" size={22} strokeWidth={2.1} /></span>
+          <span className="brand-text">
+            <span className="brand-name">Bounty Payout</span>
+            <span className="brand-sub">on GenLayer</span>
+          </span>
+        </a>
+        <nav className="tabs" aria-label="Sections">
+          {TABS.map(([k, label, href]) => (
+            <a key={k} href={href} className={tabKey === k ? "on" : ""} aria-current={tabKey === k ? "page" : undefined}>{label}</a>
+          ))}
+        </nav>
         <div className="wallet">
           {wallet ? (
             <>
-              <span className="pill" title={wallet.address}>{short(wallet.address)}</span>
-              {balance !== null && <span className="pill">{formatGen(balance, 2)} GEN</span>}
-              <button onClick={getGen}>Get test GEN</button>
+              <span className="pill addr" title={wallet.address}><span className="live-dot" aria-hidden="true" />{short(wallet.address)}</span>
+              {balance !== null && <span className="pill bal">{formatGen(balance, 2)} GEN</span>}
+              <button className="btn ghost sm gen-btn" onClick={getGen} aria-label="Get test GEN" title="Get test GEN"><Icon name="bolt" size={15} /><span className="btn-text">Get test GEN</span></button>
             </>
           ) : (
-            <button className="primary" onClick={handleConnect}>Connect wallet</button>
+            <button className="btn primary sm" onClick={handleConnect}><Icon name="wallet" size={16} />Connect wallet</button>
           )}
         </div>
       </header>
-      {walletError && <p className="error" role="alert">{walletError}</p>}
+      {walletError && <p className="banner error" role="alert">{walletError}</p>}
 
-      {route.name === "list" && (
-        <section className="hero">
-          <h2>Bounties that pay themselves when the PR is merged.</h2>
-          <p>
-            A sponsor escrows GEN against a GitHub issue and plain-text acceptance criteria. A hunter claims it with a pull
-            request. GenLayer validators each read the PR from GitHub, check the hard facts in code and grade every criterion;
-            if they agree it passes, the reward is paid in the same transaction. Nobody can veto an accepted claim.
-          </p>
-        </section>
-      )}
+      {isList && <Hero bounties={bounties} />}
+      {isList && <StepsStrip />}
 
-      <nav className="tabs" aria-label="Sections">
-        {TABS.map(([k, label, href]) => (
-          <a key={k} href={href} className={tabKey === k ? "on" : ""} aria-current={tabKey === k ? "page" : undefined}>{label}</a>
-        ))}
-      </nav>
-
-      <main className="layout">
+      <main className={wide ? "layout single" : "layout"}>
         <div className="main-col">
           {loadError && (
-            <div className="error card" role="alert">
-              {loadError} <button onClick={refresh}>Retry</button>
+            <div className="error-card" role="alert">
+              <span>{loadError}</span> <button className="btn ghost sm" onClick={refresh}>Retry</button>
             </div>
           )}
-          {route.name === "list" && (
-            <>
-              {bounties === null && !loadError && <p className="muted">Loading bounties from the contract…</p>}
-              {bounties?.length === 0 && <p className="muted">No bounties yet. <a href="#/create">Post the first one.</a></p>}
+          {isList && (
+            <section className="board" aria-labelledby="board-title">
+              <div className="section-head">
+                <div>
+                  <p className="eyebrow">The board</p>
+                  <h2 id="board-title" className="section-title">Wanted: merged pull requests</h2>
+                </div>
+                <a className="btn primary sm hide-mobile" href="#/create"><Icon name="plus" size={16} />Post a bounty</a>
+              </div>
+              {bounties === null && !loadError && (
+                <>
+                  <p className="muted small">Loading bounties from the contract…</p>
+                  <div className="bounty-grid" aria-hidden="true">
+                    {[0, 1, 2].map((i) => <div key={i} className="poster skeleton" />)}
+                  </div>
+                </>
+              )}
+              {bounties?.length === 0 && (
+                <div className="empty">
+                  <Icon name="flag" size={28} />
+                  <p>No bounties yet. <a href="#/create">Post the first one.</a></p>
+                </div>
+              )}
               {bounties && bounties.length > 0 && <BountyList bounties={bounties} now={now} />}
-            </>
+            </section>
           )}
           {route.name === "bounty" && (
             <>
-              {!shownDetail && !loadError && <p className="muted">Loading bounty #{route.id}…</p>}
+              {!shownDetail && !loadError && <p className="muted loading-line">Loading bounty #{route.id}…</p>}
               {shownDetail && (
                 <BountyDetail
                   bounty={shownDetail.bounty}
@@ -228,48 +237,200 @@ export default function App({
           )}
           {route.name === "create" && <CreateBounty wallet={wallet?.address} busy={busy} onCreate={onCreate} onConnect={handleConnect} />}
           {route.name === "how" && <HowItWorks />}
+          {isList && !wallet && <TryIt wide />}
         </div>
-        <aside className="side-col">
-          <TxLog txs={txs} />
-          {!wallet && (
-            <section className="card">
-              <h3>Try it</h3>
-              <ol className="small">
-                <li>Browse bounties: no wallet needed.</li>
-                <li>Connect a wallet. The app adds GenLayer Studionet for you, then tap "Get test GEN".</li>
-                <li>Post a bounty on a public repo you control, open a PR with your address in the body, merge it, then claim and judge.</li>
-              </ol>
+        {!wide && (
+          <aside className="side-col">
+            {!wallet && <TryIt />}
+            <section className="panel contract-card">
+              <p className="eyebrow">Contract</p>
+              <a className="mono-link" href={`${EXPLORER_BASE}/address/${contractAddress}`} target="_blank" rel="noreferrer" title={contractAddress}>
+                {short(contractAddress)} <Icon name="external" size={14} />
+              </a>
+              <p className="muted small">GenLayer Studionet · test GEN has no value</p>
             </section>
-          )}
-        </aside>
+          </aside>
+        )}
       </main>
-      <footer className="muted small">
-        Open source · contract, tests and this app on{" "}
-        <a href="https://github.com/gosof32/bounty-payout-dapp" target="_blank" rel="noreferrer">GitHub</a> · Studionet test GEN has no value
+      <TxLog txs={txs} />
+      <footer className="foot">
+        <div className="foot-brand"><Icon name="logo" size={18} /> Bounty Payout</div>
+        <p className="muted small">
+          Open source · contract, tests and this app on{" "}
+          <a href="https://github.com/gosof32/bounty-payout-dapp" target="_blank" rel="noreferrer">GitHub</a> · contract{" "}
+          <a className="mono" href={`${EXPLORER_BASE}/address/${contractAddress}`} target="_blank" rel="noreferrer">{short(contractAddress)}</a>{" "}
+          on Studionet · test GEN has no value
+        </p>
       </footer>
     </div>
   );
 }
 
+// Splits "1,234 GEN" into number and unit so the figure and unit can be styled apart.
+const splitAmount = (text) => {
+  const i = text.lastIndexOf(" ");
+  return i < 0 ? [text, ""] : [text.slice(0, i), text.slice(i + 1)];
+};
+
+function Hero({ bounties }) {
+  const stats = useMemo(() => {
+    if (!bounties) return null;
+    const sum = (pred) => bounties.filter(pred).reduce((acc, b) => acc + b.reward, 0n);
+    return {
+      total: bounties.length,
+      open: bounties.filter((b) => b.status === "OPEN").length,
+      paid: sum((b) => b.status === "PAID"),
+      paidCount: bounties.filter((b) => b.status === "PAID").length,
+      escrowed: sum((b) => b.status === "OPEN"),
+      claims: bounties.reduce((acc, b) => acc + b.claim_count, 0),
+    };
+  }, [bounties]);
+  const [paidNum, paidUnit] = stats ? splitAmount(formatReward(stats.paid)) : ["–", ""];
+
+  return (
+    <section className="hero" aria-labelledby="hero-title">
+      <div className="hero-grid">
+        <div className="hero-copy">
+          <p className="eyebrow hero-eyebrow"><span className="live-dot" aria-hidden="true" /> Live on GenLayer Studionet</p>
+          <h1 id="hero-title" className="hero-title">Bounties that <span className="accent-text">pay themselves</span>.</h1>
+          <p className="hero-sub">
+            Escrow GEN on a GitHub issue. When a merged PR meets your criteria, GenLayer validators agree and the hunter is paid in the same transaction.
+          </p>
+          <div className="hero-cta">
+            <a className="btn primary lg" href="#/create"><Icon name="plus" size={18} />Post a bounty</a>
+            <a className="btn ghost lg" href="#/how">How it works <Icon name="arrowRight" size={18} /></a>
+          </div>
+        </div>
+        <HeroArt />
+      </div>
+      <dl className="stats" aria-label="Contract stats">
+        <div className="stat">
+          <dt><Icon name="flag" size={15} />Bounties posted</dt>
+          <dd><span className="stat-num">{stats ? stats.total : "–"}</span></dd>
+          <p className="stat-sub">{stats ? `${stats.open} open now` : "Reading the contract…"}</p>
+        </div>
+        <div className="stat">
+          <dt><Icon name="coins" size={15} />Paid out</dt>
+          <dd><span className="stat-num">{paidNum}</span> <span className="stat-unit">{paidUnit}</span></dd>
+          <p className="stat-sub">{stats ? `${formatReward(stats.escrowed)} in escrow` : " "}</p>
+        </div>
+        <div className="stat">
+          <dt><Icon name="scale" size={15} />Claims submitted</dt>
+          <dd><span className="stat-num">{stats ? stats.claims : "–"}</span></dd>
+          <p className="stat-sub">{stats ? `${stats.paidCount} won by validator vote` : " "}</p>
+        </div>
+      </dl>
+    </section>
+  );
+}
+
+// Decorative "wanted poster" for the hero. Purely visual, hidden from assistive tech.
+function HeroArt() {
+  return (
+    <div className="hero-art" aria-hidden="true">
+      <div className="wanted">
+        <div className="wanted-top"><span>Wanted</span><span className="mono">#0042</span></div>
+        <div className="wanted-pr"><Icon name="merge" size={34} strokeWidth={1.6} /></div>
+        <p className="wanted-line">One merged pull request</p>
+        <p className="wanted-sub mono">acme/widgets#7</p>
+        <div className="wanted-rule" />
+        <ul className="wanted-checks">
+          <li><Icon name="check" size={13} strokeWidth={3} />Merged before deadline</li>
+          <li><Icon name="check" size={13} strokeWidth={3} />Issue linked</li>
+          <li><Icon name="check" size={13} strokeWidth={3} />3 / 3 criteria met</li>
+        </ul>
+        <div className="wanted-validators">
+          {[0, 1, 2, 3, 4].map((i) => <span key={i} style={{ "--i": i }}><Icon name="check" size={11} strokeWidth={3} /></span>)}
+          <em>validators agree</em>
+        </div>
+        <div className="wanted-reward"><span>Reward</span><strong>250 GEN</strong></div>
+      </div>
+      <div className="wanted ghost-card" />
+    </div>
+  );
+}
+
+const STRIP = [
+  ["doc", "Post", "Sponsor escrows GEN on an issue with plain-text acceptance criteria."],
+  ["merge", "PR merged", "Hunter merges a PR that links the issue and carries their wallet address."],
+  ["users", "Validators judge", "Each validator reads the PR from GitHub and grades every criterion."],
+  ["coins", "Paid", "If they agree it passes, the reward goes to the hunter in that same tx."],
+];
+
+function StepsStrip() {
+  return (
+    <section className="strip" aria-labelledby="strip-title">
+      <h2 id="strip-title" className="sr-only">How a bounty pays out</h2>
+      <ol className="strip-steps">
+        {STRIP.map(([icon, title, text], i) => (
+          <li key={title} className="strip-step" style={{ "--i": i }}>
+            <span className="strip-icon"><Icon name={icon} size={20} /></span>
+            <span className="strip-num">0{i + 1}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))}
+      </ol>
+      <p className="strip-note">
+        <Icon name="shield" size={16} />
+        Validators must reach consensus on every hard fact and every criterion. No sponsor veto, no stuck funds.
+        <a href="#/how">Full rules <Icon name="arrowRight" size={14} /></a>
+      </p>
+    </section>
+  );
+}
+
+function TryIt({ wide = false }) {
+  return (
+    <section className={`panel try ${wide ? "wide" : ""}`} aria-label="Try it">
+      <h3><Icon name="sparkle" size={18} />Try it</h3>
+      <ol className="try-list">
+        <li><span>1</span>Browse bounties: no wallet needed.</li>
+        <li><span>2</span>Connect a wallet. The app adds GenLayer Studionet for you, then tap "Get test GEN".</li>
+        <li><span>3</span>Post a bounty on a public repo you control, open a PR with your address in the body, merge it, then claim and judge.</li>
+      </ol>
+    </section>
+  );
+}
+
+const HOW = [
+  ["doc", "Post", <>The sponsor names a public repo and issue, writes 1-8 acceptance criteria, sets a deadline and escrows the reward.</>],
+  ["pr", "Build", <>The hunter opens a PR that references the issue (<code>Closes #7</code>) and puts their wallet address in the PR body. That address is the proof of authorship.</>],
+  ["flag", "Claim", <>The hunter submits the PR number from that wallet before the deadline. One claim per wallet per bounty.</>],
+  ["scale", "Judge", <>Anyone can judge a pending claim. Validators read the PR from the GitHub API; contract code checks it is merged into the right repo inside the window, links the issue and carries the hunter's address. Only then does an LLM grade each criterion pass/fail with a reason.</>],
+  ["users", "Agree", <>Each validator repeats the read and grading. They must match every hard fact exactly and every criterion's pass/fail, or the vote fails.</>],
+  ["coins", "Settle", <>All checks pass → PAID to the hunter in the same transaction, other claims SUPERSEDED. Rejected → the hunter can update the PR and re-judge (limited attempts).</>],
+];
+
 function HowItWorks() {
   return (
-    <section className="card how">
-      <h3>How a bounty pays out</h3>
-      <ol>
-        <li><b>Post.</b> The sponsor names a public repo and issue, writes 1-8 acceptance criteria, sets a deadline and escrows the reward.</li>
-        <li><b>Build.</b> The hunter opens a PR that references the issue (<code>Closes #7</code>) and puts their wallet address in the PR body. That address is the proof of authorship.</li>
-        <li><b>Claim.</b> The hunter submits the PR number from that wallet before the deadline. One claim per wallet per bounty.</li>
-        <li><b>Judge.</b> Anyone can judge a pending claim. Validators read the PR from the GitHub API; contract code checks it is merged into the right repo inside the window, links the issue and carries the hunter's address. Only then does an LLM grade each criterion pass/fail with a reason.</li>
-        <li><b>Agree.</b> Each validator repeats the read and grading. They must match every hard fact exactly and every criterion's pass/fail, or the vote fails.</li>
-        <li><b>Settle.</b> All checks pass → PAID to the hunter in the same transaction, other claims SUPERSEDED. Rejected → the hunter can update the PR and re-judge (limited attempts).</li>
+    <section className="how" aria-labelledby="how-title">
+      <p className="eyebrow">The rules</p>
+      <h2 id="how-title" className="section-title">How a bounty pays out</h2>
+      <ol className="how-steps">
+        {HOW.map(([icon, title, body], i) => (
+          <li key={title} className="how-step">
+            <span className="how-icon"><Icon name={icon} size={20} /></span>
+            <div>
+              <h3><span className="how-num">{i + 1}</span>{title}</h3>
+              <p>{body}</p>
+            </div>
+          </li>
+        ))}
       </ol>
-      <h3>When can the sponsor get the reward back?</h3>
-      <ul>
-        <li><b>Cancel</b>: sponsor only, while the bounty is open and no claim can still be judged.</li>
-        <li><b>Refund</b>: anyone, after the deadline when no claim is live, or after the judging window regardless. The reward always goes back to the sponsor.</li>
-      </ul>
-      <h3>Judge outcomes that change nothing</h3>
-      <p><code>NOT_READY</code> (PR still open) and <code>INCONCLUSIVE</code> (GitHub or the model unavailable) leave the claim pending and use no attempt. Just judge again later.</p>
+      <div className="how-grid">
+        <div className="panel">
+          <h3><Icon name="undo" size={18} />When can the sponsor get the reward back?</h3>
+          <ul>
+            <li><b>Cancel</b>: sponsor only, while the bounty is open and no claim can still be judged.</li>
+            <li><b>Refund</b>: anyone, after the deadline when no claim is live, or after the judging window regardless. The reward always goes back to the sponsor.</li>
+          </ul>
+        </div>
+        <div className="panel">
+          <h3><Icon name="clock" size={18} />Judge outcomes that change nothing</h3>
+          <p><code>NOT_READY</code> (PR still open) and <code>INCONCLUSIVE</code> (GitHub or the model unavailable) leave the claim pending and use no attempt. Just judge again later.</p>
+        </div>
+      </div>
     </section>
   );
 }
