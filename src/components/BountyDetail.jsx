@@ -8,6 +8,8 @@ import { PhaseChip, StatusBadge } from "./BountyList.jsx";
 import CopyButton from "./CopyButton.jsx";
 import Icon from "./Icons.jsx";
 import { short } from "./TxLog.jsx";
+import PrCheck, { PreflightResult, usePreflight } from "./PrCheck.jsx";
+import EmbedBadge from "./EmbedBadge.jsx";
 
 const addrLink = (a) => (
   <a className="mono" href={`${EXPLORER_BASE}/address/${a}`} target="_blank" rel="noreferrer" title={a}>{short(a)}</a>
@@ -46,7 +48,7 @@ function lifecycle(bounty, claims, phase, now) {
   ];
 }
 
-export default function BountyDetail({ bounty, claims, wallet, busy, now, onAction, onConnect }) {
+export default function BountyDetail({ bounty, claims, wallet, busy, now, onAction, onConnect, fetchPr }) {
   const phase = phaseOf(bounty, now);
   const can = bountyActions(bounty, { wallet, claims, now });
   const winner = claims?.find((c) => c.id === bounty.winner_claim);
@@ -119,8 +121,10 @@ export default function BountyDetail({ bounty, claims, wallet, busy, now, onActi
           </section>
 
           {bounty.status === "OPEN" && (
-            <SubmitClaim bounty={bounty} wallet={wallet} can={can} busy={busy} onAction={onAction} onConnect={onConnect} />
+            <SubmitClaim bounty={bounty} wallet={wallet} can={can} busy={busy} onAction={onAction} onConnect={onConnect} fetchPr={fetchPr} />
           )}
+
+          <PrCheck bounty={bounty} claims={claims} wallet={wallet} fetchPr={fetchPr} />
         </div>
 
         <aside className="detail-side">
@@ -152,6 +156,8 @@ export default function BountyDetail({ bounty, claims, wallet, busy, now, onActi
               <div><dt>Claims</dt><dd>{bounty.claim_count}</dd></div>
             </dl>
           </section>
+
+          <EmbedBadge bounty={bounty} />
         </aside>
       </div>
     </article>
@@ -237,10 +243,13 @@ function ClaimCard({ bounty, claim, wallet, busy, now, onAction }) {
   );
 }
 
-function SubmitClaim({ bounty, wallet, can, busy, onAction, onConnect }) {
+function SubmitClaim({ bounty, wallet, can, busy, onAction, onConnect, fetchPr }) {
   const [pr, setPr] = useState("");
   const [err, setErr] = useState("");
   const snippet = prBodySnippet(wallet, bounty.issue);
+  // Preflight: the contract's hard checks, run on the live PR before anything is signed.
+  const check = usePreflight({ bounty, prRef: pr, hunter: wallet ?? "", fetchPr });
+  const failing = check.result && check.result.kind === "JUDGED" && check.result.codes.filter((c) => wallet || c !== "MISSING_AUTHORSHIP").length > 0;
 
   const submit = (e) => {
     e.preventDefault();
@@ -278,12 +287,17 @@ function SubmitClaim({ bounty, wallet, can, busy, onAction, onConnect }) {
       <div className="field">
         <label htmlFor="claim-pr">Pull request</label>
         <input id="claim-pr" value={pr} onChange={(e) => setPr(e.target.value)} placeholder={`42 or https://github.com/${bounty.repo}/pull/42`} aria-label="Pull request" />
-        <span className="hint">The PR number or its full URL.</span>
+        <span className="hint">The PR number or its full URL. We check it against the contract's rules before you sign.</span>
       </div>
+      <PreflightResult bounty={bounty} check={check} hunter={wallet ?? ""} showRefError={false} />
       {!can.submitClaim && can.claimBlock && <p className="muted small">{can.claimBlock}</p>}
       {err && <p className="error" role="alert">{err}</p>}
       <div className="form-actions">
-        <button className="btn primary" type="submit" disabled={busy || !can.submitClaim}>Submit claim</button>
+        {failing ? (
+          <button className="btn danger" type="submit" disabled={busy || !can.submitClaim}>Submit anyway (would be rejected)</button>
+        ) : (
+          <button className="btn primary" type="submit" disabled={busy || !can.submitClaim}>Submit claim</button>
+        )}
       </div>
     </form>
   );

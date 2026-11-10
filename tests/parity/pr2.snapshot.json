@@ -1,0 +1,33 @@
+{
+  "source": "https://api.github.com/repos/gosof32/genlayer-bounty-payout/pulls/2 (+ /files), trimmed to the fields the contract reads; fetched 2026-11-10",
+  "pr": {
+    "number": 2,
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-11-06T07:24:12Z",
+    "created_at": "2026-11-06T07:24:05Z",
+    "closed_at": "2026-11-06T07:24:12Z",
+    "title": "Add CONTRIBUTING guide",
+    "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+    "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+    "user": {
+      "login": "gosof32"
+    },
+    "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+    },
+    "base": {
+      "repo": {
+        "full_name": "gosof32/genlayer-bounty-payout"
+      }
+    }
+  },
+  "files": [
+    {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+    }
+  ]
+}

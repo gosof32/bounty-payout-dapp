@@ -30,6 +30,7 @@ function setup({ bounties = [], detail = null, claims = [], wallet = HUNTER, ...
     readClaims: vi.fn(async () => claims),
     getBalance: vi.fn(async () => 50n * WEI),
     fundTestGen: vi.fn(async () => "0x1"),
+    fetchPr: vi.fn(async () => ({ pr: null, files: null, prStatus: 404, filesStatus: null })),
     pollMs: 1e9,
     ...extra,
   };

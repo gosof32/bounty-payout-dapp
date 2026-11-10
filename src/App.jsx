@@ -31,6 +31,7 @@ export default function App({
   fundTestGen = defaultFund,
   getBalance = defaultBalance,
   readClient: injectedReadClient,
+  fetchPr,
   pollMs = 20000,
 }) {
   const readClient = useMemo(() => injectedReadClient ?? createReadClient(), [injectedReadClient]);
@@ -231,6 +232,7 @@ export default function App({
                   now={now}
                   onAction={run}
                   onConnect={handleConnect}
+                  fetchPr={fetchPr}
                 />
               )}
             </>

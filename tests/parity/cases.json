@@ -1,0 +1,3677 @@
+{
+ "cases": [
+  {
+   "name": "parse_pr_ref '2'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "2",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 2
+   }
+  },
+  {
+   "name": "parse_pr_ref ' 2 '",
+   "fn": "parse_pr_ref",
+   "args": [
+    " 2 ",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 2
+   }
+  },
+  {
+   "name": "parse_pr_ref '\\t42\\n'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "\t42\n",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 42
+   }
+  },
+  {
+   "name": "parse_pr_ref '0'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "0",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr number out of range"
+   }
+  },
+  {
+   "name": "parse_pr_ref '1000000000'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "1000000000",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr number out of range"
+   }
+  },
+  {
+   "name": "parse_pr_ref '999999999'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "999999999",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 999999999
+   }
+  },
+  {
+   "name": "parse_pr_ref '-3'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "-3",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref '+3'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "+3",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref '4.0'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "4.0",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref ''",
+   "fn": "parse_pr_ref",
+   "args": [
+    "",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref '  '",
+   "fn": "parse_pr_ref",
+   "args": [
+    "  ",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref 'https://github.com/gosof32/genlayer-bounty-payout/pull/2'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "https://github.com/gosof32/genlayer-bounty-payout/pull/2",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 2
+   }
+  },
+  {
+   "name": "parse_pr_ref 'https://github.com/gosof32/genlayer-bounty-payout/pull/2/'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "https://github.com/gosof32/genlayer-bounty-payout/pull/2/",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 2
+   }
+  },
+  {
+   "name": "parse_pr_ref 'https://github.com/GOSOF32/GENLAYER-BOUNTY-PAYOUT/pull/2'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "https://github.com/GOSOF32/GENLAYER-BOUNTY-PAYOUT/pull/2",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 2
+   }
+  },
+  {
+   "name": "parse_pr_ref 'https://github.com/other/repo/pull/2'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "https://github.com/other/repo/pull/2",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pull request is not in the bounty repository"
+   }
+  },
+  {
+   "name": "parse_pr_ref 'http://github.com/gosof32/genlayer-bounty-payout/pull/2'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "http://github.com/gosof32/genlayer-bounty-payout/pull/2",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref 'https://github.com/gosof32/genlayer-bounty-payout/pull/2/files'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "https://github.com/gosof32/genlayer-bounty-payout/pull/2/files",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref 'https://github.com/gosof32/genlayer-bounty-payout/pull/2#issuecomment-1'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "https://github.com/gosof32/genlayer-bounty-payout/pull/2#issuecomment-1",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref 'https://github.com/gosof32/genlayer-bounty-payout/issues/1'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "https://github.com/gosof32/genlayer-bounty-payout/issues/1",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref 'https://github.com/gosof32/genlayer-bounty-payout/pull/0'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "https://github.com/gosof32/genlayer-bounty-payout/pull/0",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr number out of range"
+   }
+  },
+  {
+   "name": "parse_pr_ref 'https://github.com/gosof32/genlayer-bounty-payout/pull/1234567890'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "https://github.com/gosof32/genlayer-bounty-payout/pull/1234567890",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref '\u0663'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "\u0663",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 3
+   }
+  },
+  {
+   "name": "parse_pr_ref '\u00b2'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "\u00b2",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "raises": true
+   }
+  },
+  {
+   "name": "parse_pr_ref '\uff11\uff12'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "\uff11\uff12",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 12
+   }
+  },
+  {
+   "name": "parse_pr_ref 'https://github.com/gosof32/genlayer-bounty-payout/pull/\u0663'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "https://github.com/gosof32/genlayer-bounty-payout/pull/\u0663",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 3
+   }
+  },
+  {
+   "name": "parse_pr_ref '\\x1c7\\x1f'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "\u001c7\u001f",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 7
+   }
+  },
+  {
+   "name": "parse_pr_ref '\\ufeff7'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "\ufeff7",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref '7\\xa0'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "7\u00a0",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "ok": 7
+   }
+  },
+  {
+   "name": "parse_pr_ref 'pull/2'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "pull/2",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "parse_pr_ref '#2'",
+   "fn": "parse_pr_ref",
+   "args": [
+    "#2",
+    "gosof32/genlayer-bounty-payout"
+   ],
+   "expected": {
+    "error": "[INVALID] pr must be a number or https://github.com/<owner>/<repo>/pull/<n>"
+   }
+  },
+  {
+   "name": "links_issue 'Closes #7'",
+   "fn": "links_issue",
+   "args": [
+    "Closes #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'see #7.'",
+   "fn": "links_issue",
+   "args": [
+    "see #7.",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'fixes: acme/widgets#7'",
+   "fn": "links_issue",
+   "args": [
+    "fixes: acme/widgets#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'Resolved https://github.com/acme/widgets/issues/7'",
+   "fn": "links_issue",
+   "args": [
+    "Resolved https://github.com/acme/widgets/issues/7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue '#70 and #17'",
+   "fn": "links_issue",
+   "args": [
+    "#70 and #17",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'other/repo#7'",
+   "fn": "links_issue",
+   "args": [
+    "other/repo#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue '&#7;'",
+   "fn": "links_issue",
+   "args": [
+    "&#7;",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'Fixes #7'",
+   "fn": "links_issue",
+   "args": [
+    "Fixes #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'FIXED #7'",
+   "fn": "links_issue",
+   "args": [
+    "FIXED #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'closed  #7'",
+   "fn": "links_issue",
+   "args": [
+    "closed  #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'close#7'",
+   "fn": "links_issue",
+   "args": [
+    "close#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'Closes\\n#7'",
+   "fn": "links_issue",
+   "args": [
+    "Closes\n#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'Closes:\\t#7'",
+   "fn": "links_issue",
+   "args": [
+    "Closes:\t#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'Closes: #7'",
+   "fn": "links_issue",
+   "args": [
+    "Closes: #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'Closes : #7'",
+   "fn": "links_issue",
+   "args": [
+    "Closes : #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'preclose #7'",
+   "fn": "links_issue",
+   "args": [
+    "preclose #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'closesx #7'",
+   "fn": "links_issue",
+   "args": [
+    "closesx #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'Fix ACME/Widgets#7'",
+   "fn": "links_issue",
+   "args": [
+    "Fix ACME/Widgets#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'acme/widgets#77'",
+   "fn": "links_issue",
+   "args": [
+    "acme/widgets#77",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'https://github.com/acme/widgets/issues/7/'",
+   "fn": "links_issue",
+   "args": [
+    "https://github.com/acme/widgets/issues/7/",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'https://github.com/acme/widgets/issues/70'",
+   "fn": "links_issue",
+   "args": [
+    "https://github.com/acme/widgets/issues/70",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'issue#7'",
+   "fn": "links_issue",
+   "args": [
+    "issue#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'x#7'",
+   "fn": "links_issue",
+   "args": [
+    "x#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue '_#7'",
+   "fn": "links_issue",
+   "args": [
+    "_#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue '/#7'",
+   "fn": "links_issue",
+   "args": [
+    "/#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue '\u00e9#7'",
+   "fn": "links_issue",
+   "args": [
+    "\u00e9#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue '(#7)'",
+   "fn": "links_issue",
+   "args": [
+    "(#7)",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue '#7\u0663'",
+   "fn": "links_issue",
+   "args": [
+    "#7\u0663",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue '#7x'",
+   "fn": "links_issue",
+   "args": [
+    "#7x",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'closes\\xa0#7'",
+   "fn": "links_issue",
+   "args": [
+    "closes\u00a0#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'closes\\x1c#7'",
+   "fn": "links_issue",
+   "args": [
+    "closes\u001c#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'closes\\ufeff#7'",
+   "fn": "links_issue",
+   "args": [
+    "closes\ufeff#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'closes\\u200b#7'",
+   "fn": "links_issue",
+   "args": [
+    "closes\u200b#7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue '\u00e9closes #7'",
+   "fn": "links_issue",
+   "args": [
+    "\u00e9closes #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'closes_ #7'",
+   "fn": "links_issue",
+   "args": [
+    "closes_ #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'Resolves #7'",
+   "fn": "links_issue",
+   "args": [
+    "Resolves #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'resolve #7'",
+   "fn": "links_issue",
+   "args": [
+    "resolve #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'resolvesd #7'",
+   "fn": "links_issue",
+   "args": [
+    "resolvesd #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'fixe #7'",
+   "fn": "links_issue",
+   "args": [
+    "fixe #7",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue 'Closes #7.\\n\\nBody'",
+   "fn": "links_issue",
+   "args": [
+    "Closes #7.\n\nBody",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue 'Refs #70 and issue7.'",
+   "fn": "links_issue",
+   "args": [
+    "Refs #70 and issue7.",
+    "acme/widgets",
+    7
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "links_issue real PR #2 title+body",
+   "fn": "links_issue",
+   "args": [
+    "Add CONTRIBUTING guide\nCloses #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+    "gosof32/genlayer-bounty-payout",
+    1
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue dotted repo",
+   "fn": "links_issue",
+   "args": [
+    "Closes my.org/re.po#3",
+    "my.org/re.po",
+    3
+   ],
+   "expected": {
+    "ok": {
+     "links": true,
+     "closing": true
+    }
+   }
+  },
+  {
+   "name": "links_issue dot is not a wildcard",
+   "fn": "links_issue",
+   "args": [
+    "Closes myXorg/re.po#3",
+    "my.org/re.po",
+    3
+   ],
+   "expected": {
+    "ok": {
+     "links": false,
+     "closing": false
+    }
+   }
+  },
+  {
+   "name": "has_address 'pay 0xabcdef0123456789abcdef0123456789abcdef01 thanks'",
+   "fn": "has_address",
+   "args": [
+    "pay 0xabcdef0123456789abcdef0123456789abcdef01 thanks",
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01"
+   ],
+   "expected": {
+    "ok": true
+   }
+  },
+  {
+   "name": "has_address 'pay 0xAbCdEf0123456789aBcDeF0123456789AbCdEf019'",
+   "fn": "has_address",
+   "args": [
+    "pay 0xAbCdEf0123456789aBcDeF0123456789AbCdEf019",
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01"
+   ],
+   "expected": {
+    "ok": false
+   }
+  },
+  {
+   "name": "has_address 'pay 0x00'",
+   "fn": "has_address",
+   "args": [
+    "pay 0x00",
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01"
+   ],
+   "expected": {
+    "ok": false
+   }
+  },
+  {
+   "name": "has_address 'pay 0xAbCdEf0123456789aBcDeF0123456789AbCdEf01'",
+   "fn": "has_address",
+   "args": [
+    "pay 0xAbCdEf0123456789aBcDeF0123456789AbCdEf01",
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01"
+   ],
+   "expected": {
+    "ok": true
+   }
+  },
+  {
+   "name": "has_address 'pay 0XABCDEF0123456789ABCDEF0123456789ABCDEF01'",
+   "fn": "has_address",
+   "args": [
+    "pay 0XABCDEF0123456789ABCDEF0123456789ABCDEF01",
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01"
+   ],
+   "expected": {
+    "ok": true
+   }
+  },
+  {
+   "name": "has_address 'x0xAbCdEf0123456789aBcDeF0123456789AbCdEf01'",
+   "fn": "has_address",
+   "args": [
+    "x0xAbCdEf0123456789aBcDeF0123456789AbCdEf01",
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01"
+   ],
+   "expected": {
+    "ok": true
+   }
+  },
+  {
+   "name": "has_address 'a0xAbCdEf0123456789aBcDeF0123456789AbCdEf01'",
+   "fn": "has_address",
+   "args": [
+    "a0xAbCdEf0123456789aBcDeF0123456789AbCdEf01",
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01"
+   ],
+   "expected": {
+    "ok": false
+   }
+  },
+  {
+   "name": "has_address '0xAbCdEf0123456789aBcDeF0123456789AbCdEf01g'",
+   "fn": "has_address",
+   "args": [
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01g",
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01"
+   ],
+   "expected": {
+    "ok": true
+   }
+  },
+  {
+   "name": "has_address '00xAbCdEf0123456789aBcDeF0123456789AbCdEf01'",
+   "fn": "has_address",
+   "args": [
+    "00xAbCdEf0123456789aBcDeF0123456789AbCdEf01",
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01"
+   ],
+   "expected": {
+    "ok": false
+   }
+  },
+  {
+   "name": "has_address 'AbCdEf0123456789aBcDeF0123456789AbCdEf01'",
+   "fn": "has_address",
+   "args": [
+    "AbCdEf0123456789aBcDeF0123456789AbCdEf01",
+    "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01"
+   ],
+   "expected": {
+    "ok": false
+   }
+  },
+  {
+   "name": "has_address real PR #2 hunter",
+   "fn": "has_address",
+   "args": [
+    "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": true
+   }
+  },
+  {
+   "name": "has_address real PR #2 outsider",
+   "fn": "has_address",
+   "args": [
+    "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+    "0x52B090BD9511874811D095e1e581CCb7Dc474F2D"
+   ],
+   "expected": {
+    "ok": false
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12+07:00'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12+07:00"
+   ],
+   "expected": {
+    "ok": "2026-11-06T00:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12.999999Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12.999999Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06 07:24:12Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06 07:24:12Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:00:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06Z"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps need a timezone, e.g. a trailing Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps need a timezone, e.g. a trailing Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12-05:30'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12-05:30"
+   ],
+   "expected": {
+    "ok": "2026-11-06T12:54:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '20261106T072412Z'",
+   "fn": "parse_ts",
+   "args": [
+    "20261106T072412Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts ' 2026-11-06T07:24:12Z '",
+   "fn": "parse_ts",
+   "args": [
+    " 2026-11-06T07:24:12Z "
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-02-30T00:00:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-02-30T00:00:00Z"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T24:00:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T24:00:00Z"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts 'not a date'",
+   "fn": "parse_ts",
+   "args": [
+    "not a date"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts ''",
+   "fn": "parse_ts",
+   "args": [
+    ""
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12.5Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12.5Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12+0700'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12+0700"
+   ],
+   "expected": {
+    "ok": "2026-11-06T00:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06+00:00'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06+00:00"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps need a timezone, e.g. a trailing Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06+07:00'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06+07:00"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps need a timezone, e.g. a trailing Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps need a timezone, e.g. a trailing Z"
+   }
+  },
+  {
+   "name": "parse_ts '20261106+0700'",
+   "fn": "parse_ts",
+   "args": [
+    "20261106+0700"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps need a timezone, e.g. a trailing Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07+07'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07+07"
+   ],
+   "expected": {
+    "ok": "2026-11-06T00:00:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-W45-5T07:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-W45-5T07:00Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:00:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026W455T07:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026W455T07:00Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:00:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-W45T07:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-W45T07:00Z"
+   ],
+   "expected": {
+    "ok": "2026-11-02T07:00:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-W53-1T00:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-W53-1T00:00Z"
+   ],
+   "expected": {
+    "ok": "2026-12-28T00:00:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2020-W53-7T00:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2020-W53-7T00:00Z"
+   ],
+   "expected": {
+    "ok": "2021-01-03T00:00:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-310T07:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-310T07:00Z"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12.1234567Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12.1234567Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12,5Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12,5Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06t07:24Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06t07:24Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06x07:24Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06x07:24Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T0724Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T0724Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:2412Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:2412Z"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12+07:00:30'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12+07:00:30"
+   ],
+   "expected": {
+    "ok": "2026-11-06T00:23:42Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12+24:00'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12+24:00"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12+23:59'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12+23:59"
+   ],
+   "expected": {
+    "ok": "2026-11-05T07:25:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12-00:00'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12-00:00"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12+07:00,5'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12+07:00,5"
+   ],
+   "expected": {
+    "ok": "2026-11-06T00:24:11Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts '2024-02-29T00:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2024-02-29T00:00Z"
+   ],
+   "expected": {
+    "ok": "2024-02-29T00:00:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2023-02-29T00:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2023-02-29T00:00Z"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts '0001-01-01T00:00:00Z'",
+   "fn": "parse_ts",
+   "args": [
+    "0001-01-01T00:00:00Z"
+   ],
+   "expected": {
+    "ok": "0001-01-01T00:00:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '9999-12-31T23:59:59Z'",
+   "fn": "parse_ts",
+   "args": [
+    "9999-12-31T23:59:59Z"
+   ],
+   "expected": {
+    "ok": "9999-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12Z\\n'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12Z\n"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T7:24Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T7:24Z"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24,5Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24,5Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07,5Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07,5Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:00:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24.5Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24.5Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:00Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12+07:00.5'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12+07:00.5"
+   ],
+   "expected": {
+    "ok": "2026-11-06T00:24:11Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12+07.5'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12+07.5"
+   ],
+   "expected": {
+    "ok": "2026-11-06T00:24:11Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T072412.5Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T072412.5Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07:24:12.Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07:24:12.Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:24:12Z"
+   }
+  },
+  {
+   "name": "parse_ts '2026-11-06T07.Z'",
+   "fn": "parse_ts",
+   "args": [
+    "2026-11-06T07.Z"
+   ],
+   "expected": {
+    "ok": "2026-11-06T07:00:00Z"
+   }
+  },
+  {
+   "name": "hard_facts real PR #2 / hunter",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts real PR #2 / outsider",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0x52B090BD9511874811D095e1e581CCb7Dc474F2D"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": false,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts open PR",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "open",
+     "merged": false,
+     "merged_at": null,
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": null,
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "open",
+     "merged": false,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "",
+     "author": "gosof32",
+     "merge_sha": "",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts closed unmerged",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": false,
+     "merged_at": null,
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": false,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts merged missing, merged_at set",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts merged null, merged_at set",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": null,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts merged false, merged_at set",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": false,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": false,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts merged 'true' string",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": "true",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": false,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts merged_at offset",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T14:24:12+07:00",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts merged_at no tz",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps need a timezone, e.g. a trailing Z"
+   }
+  },
+  {
+   "name": "hard_facts base missing",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": null
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts base is a string",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": "oops"
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "raises": true
+   }
+  },
+  {
+   "name": "hard_facts fork base",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "Evil/Fork"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "evil/fork",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts body null",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": null,
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": false,
+     "closing_keyword": false,
+     "has_address": false,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts link only in title",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Fix (gosof32/genlayer-bounty-payout#1)",
+     "body": "addr 0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": false,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts address only in title",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Closes #1 0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+     "body": "no address",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": false,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts numeric title",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": 5,
+     "body": "Closes #1 0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    }
+   }
+  },
+  {
+   "name": "hard_facts user missing",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "ok": {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "",
+     "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "head_sha": "",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 0
+    }
+   }
+  },
+  {
+   "name": "hard_facts not a dict",
+   "fn": "hard_facts",
+   "args": [
+    [
+     {
+      "number": 2,
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-11-06T07:24:12Z",
+      "created_at": "2026-11-06T07:24:05Z",
+      "closed_at": "2026-11-06T07:24:12Z",
+      "title": "Add CONTRIBUTING guide",
+      "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+      "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+      "user": {
+       "login": "gosof32"
+      },
+      "head": {
+       "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+      },
+      "base": {
+       "repo": {
+        "full_name": "gosof32/genlayer-bounty-payout"
+       }
+      }
+     }
+    ],
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "raises": true
+   }
+  },
+  {
+   "name": "hard_facts files not a list",
+   "fn": "hard_facts",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    {
+     "a": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4"
+   ],
+   "expected": {
+    "raises": true
+   }
+  },
+  {
+   "name": "hard_codes all pass b1",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": []
+   }
+  },
+  {
+   "name": "hard_codes all pass b2",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:52Z",
+    "2026-11-06T07:26:16Z"
+   ],
+   "expected": {
+    "ok": []
+   }
+  },
+  {
+   "name": "hard_codes all pass b3",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:23:27Z",
+    "2026-11-07T07:22:16Z"
+   ],
+   "expected": {
+    "ok": []
+   }
+  },
+  {
+   "name": "hard_codes merged before",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:22:16Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": [
+     "MERGED_BEFORE_BOUNTY"
+    ]
+   }
+  },
+  {
+   "name": "hard_codes merged at created",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:22:17Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": []
+   }
+  },
+  {
+   "name": "hard_codes merged at deadline",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T10:22:16Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": []
+   }
+  },
+  {
+   "name": "hard_codes merged after",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T10:22:17Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": [
+     "MERGED_AFTER_DEADLINE"
+    ]
+   }
+  },
+  {
+   "name": "hard_codes not merged",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": false,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": [
+     "NOT_MERGED"
+    ]
+   }
+  },
+  {
+   "name": "hard_codes merged no merged_at",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": []
+   }
+  },
+  {
+   "name": "hard_codes wrong repo",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "evil/fork",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": [
+     "WRONG_REPO"
+    ]
+   }
+  },
+  {
+   "name": "hard_codes repo case",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "GOSOF32/GENLAYER-BOUNTY-PAYOUT",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": []
+   }
+  },
+  {
+   "name": "hard_codes several",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "evil/fork",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": false,
+     "closing_keyword": true,
+     "has_address": false,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": [
+     "WRONG_REPO",
+     "ISSUE_NOT_LINKED",
+     "MISSING_AUTHORSHIP"
+    ]
+   }
+  },
+  {
+   "name": "hard_codes everything",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": false,
+     "base_repo": "x/y",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": false,
+     "closing_keyword": true,
+     "has_address": false,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": [
+     "NOT_MERGED",
+     "WRONG_REPO",
+     "ISSUE_NOT_LINKED",
+     "MISSING_AUTHORSHIP"
+    ]
+   }
+  },
+  {
+   "name": "hard_codes bad deadline",
+   "fn": "hard_codes",
+   "args": [
+    {
+     "state": "closed",
+     "merged": true,
+     "base_repo": "gosof32/genlayer-bounty-payout",
+     "merged_at": "2026-11-06T07:24:12Z",
+     "author": "gosof32",
+     "merge_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+     "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "links_issue": true,
+     "closing_keyword": true,
+     "has_address": true,
+     "files": 1
+    },
+    "gosof32/genlayer-bounty-payout",
+    "2026-11-06T07:22:17Z",
+    "tomorrow"
+   ],
+   "expected": {
+    "error": "[INVALID] timestamps must be ISO 8601, e.g. 2026-12-31T23:59:59Z"
+   }
+  },
+  {
+   "name": "judge_once real PR #2 vs bounty #1 / hunter (claim #2 ACCEPTED on-chain)",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "JUDGED",
+     "facts": {
+      "state": "closed",
+      "merged": true,
+      "base_repo": "gosof32/genlayer-bounty-payout",
+      "merged_at": "2026-11-06T07:24:12Z",
+      "author": "gosof32",
+      "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+      "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+      "links_issue": true,
+      "closing_keyword": true,
+      "has_address": true,
+      "files": 1
+     },
+     "codes": []
+    }
+   }
+  },
+  {
+   "name": "judge_once real PR #2 vs bounty #1 / outsider (claim #1 MISSING_AUTHORSHIP on-chain)",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "JUDGED",
+     "facts": {
+      "state": "closed",
+      "merged": true,
+      "base_repo": "gosof32/genlayer-bounty-payout",
+      "merged_at": "2026-11-06T07:24:12Z",
+      "author": "gosof32",
+      "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+      "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+      "links_issue": true,
+      "closing_keyword": true,
+      "has_address": false,
+      "files": 1
+     },
+     "codes": [
+      "MISSING_AUTHORSHIP"
+     ]
+    }
+   }
+  },
+  {
+   "name": "judge_once real PR #2 vs bounty #2 / hunter",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "2026-11-06T07:22:52Z",
+    "2026-11-06T07:26:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "JUDGED",
+     "facts": {
+      "state": "closed",
+      "merged": true,
+      "base_repo": "gosof32/genlayer-bounty-payout",
+      "merged_at": "2026-11-06T07:24:12Z",
+      "author": "gosof32",
+      "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+      "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+      "links_issue": true,
+      "closing_keyword": true,
+      "has_address": true,
+      "files": 1
+     },
+     "codes": []
+    }
+   }
+  },
+  {
+   "name": "judge_once real PR #2 vs bounty #3 / hunter",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "2026-11-06T07:23:27Z",
+    "2026-11-07T07:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "JUDGED",
+     "facts": {
+      "state": "closed",
+      "merged": true,
+      "base_repo": "gosof32/genlayer-bounty-payout",
+      "merged_at": "2026-11-06T07:24:12Z",
+      "author": "gosof32",
+      "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+      "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+      "links_issue": true,
+      "closing_keyword": true,
+      "has_address": true,
+      "files": 1
+     },
+     "codes": []
+    }
+   }
+  },
+  {
+   "name": "judge_once PR unreadable",
+   "fn": "judge_once",
+   "args": [
+    null,
+    null,
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "INCONCLUSIVE",
+     "error": "could not read the pull request"
+    }
+   }
+  },
+  {
+   "name": "judge_once files unreadable",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    null,
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "INCONCLUSIVE",
+     "error": "could not read the changed files"
+    }
+   }
+  },
+  {
+   "name": "judge_once open PR",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "open",
+     "merged": false,
+     "merged_at": null,
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "NOT_READY",
+     "facts": {
+      "state": "open",
+      "merged": false,
+      "base_repo": "gosof32/genlayer-bounty-payout",
+      "merged_at": "",
+      "author": "gosof32",
+      "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+      "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+      "links_issue": true,
+      "closing_keyword": true,
+      "has_address": true,
+      "files": 1
+     },
+     "codes": []
+    }
+   }
+  },
+  {
+   "name": "judge_once open PR but merged true",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "open",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "JUDGED",
+     "facts": {
+      "state": "open",
+      "merged": true,
+      "base_repo": "gosof32/genlayer-bounty-payout",
+      "merged_at": "2026-11-06T07:24:12Z",
+      "author": "gosof32",
+      "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+      "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+      "links_issue": true,
+      "closing_keyword": true,
+      "has_address": true,
+      "files": 1
+     },
+     "codes": []
+    }
+   }
+  },
+  {
+   "name": "judge_once closed unmerged",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": false,
+     "merged_at": null,
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "JUDGED",
+     "facts": {
+      "state": "closed",
+      "merged": false,
+      "base_repo": "gosof32/genlayer-bounty-payout",
+      "merged_at": "",
+      "author": "gosof32",
+      "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+      "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+      "links_issue": true,
+      "closing_keyword": true,
+      "has_address": true,
+      "files": 1
+     },
+     "codes": [
+      "NOT_MERGED"
+     ]
+    }
+   }
+  },
+  {
+   "name": "judge_once malformed base",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": "oops"
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "INCONCLUSIVE",
+     "error": "unexpected pull request payload"
+    }
+   }
+  },
+  {
+   "name": "judge_once merged_at without tz",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "Add CONTRIBUTING guide",
+     "body": "Closes #1.\n\nAdds `CONTRIBUTING.md` at the repository root with:\n- how to install the dev requirements and run the direct-mode tests with pytest\n- how to run the Studionet lifecycle script (`setup` and `judge` phases)\n- PR conventions, including how to claim a bounty\n\nBounty payout address: 0xC27F966F8Dd499017dC5b17B2203013163b474a4\n\n(This PR is the subject of the live Studionet demo: the address above is the demo hunter's throwaway wallet.)",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "gosof32/genlayer-bounty-payout"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "INCONCLUSIVE",
+     "error": "unexpected pull request payload"
+    }
+   }
+  },
+  {
+   "name": "judge_once fork + no link + outsider",
+   "fn": "judge_once",
+   "args": [
+    {
+     "number": 2,
+     "state": "closed",
+     "merged": true,
+     "merged_at": "2026-11-06T07:24:12Z",
+     "created_at": "2026-11-06T07:24:05Z",
+     "closed_at": "2026-11-06T07:24:12Z",
+     "title": "x",
+     "body": "nothing",
+     "merge_commit_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+     "user": {
+      "login": "gosof32"
+     },
+     "head": {
+      "sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2"
+     },
+     "base": {
+      "repo": {
+       "full_name": "a/b"
+      }
+     }
+    },
+    [
+     {
+      "filename": "CONTRIBUTING.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0
+     }
+    ],
+    "gosof32/genlayer-bounty-payout",
+    1,
+    "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+    "2026-11-06T07:22:17Z",
+    "2026-11-06T10:22:16Z"
+   ],
+   "expected": {
+    "ok": {
+     "kind": "JUDGED",
+     "facts": {
+      "state": "closed",
+      "merged": true,
+      "base_repo": "a/b",
+      "merged_at": "2026-11-06T07:24:12Z",
+      "author": "gosof32",
+      "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+      "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+      "links_issue": false,
+      "closing_keyword": false,
+      "has_address": false,
+      "files": 1
+     },
+     "codes": [
+      "WRONG_REPO",
+      "ISSUE_NOT_LINKED",
+      "MISSING_AUTHORSHIP"
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -9,7 +9,10 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:contract": "pytest",
-    "smoke:studionet": "node scripts/smoke-read.mjs"
+    "smoke:studionet": "node scripts/smoke-read.mjs",
+    "test:parity": "vitest run tests/frontend/parity.test.js && pytest tests/direct/test_parity.py",
+    "badge:local": "node scripts/badge-local.mjs",
+    "preflight:live": "node scripts/preflight-live.mjs"
   },
   "dependencies": {
     "genlayer-js": "1.1.8",

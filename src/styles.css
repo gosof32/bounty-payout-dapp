@@ -455,6 +455,49 @@ input[type="datetime-local"] { color-scheme: dark; }
 .row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
 .copy.copied { color: var(--lime); border-color: #c6ff3d55; }
 
+/* ---- claim preflight / check a PR */
+.pr-check .pc-intro { margin: -4px 0 14px; line-height: 1.5; }
+.pc-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 12px 14px; }
+.pc-fields input.mono { font-family: var(--font-mono); font-size: 13px; }
+.pc-picks { margin: 12px 0 0; }
+.chip.pick { border: 1px solid var(--line); padding: 6px 12px; font-size: 12.5px; font-family: var(--font-mono); max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.preflight { margin: 14px 0 0; padding: 14px; border-radius: 14px; background: #00000026; border: 1px solid var(--line); min-width: 0; }
+.preflight.p-pass { border-color: #c6ff3d40; background: #c6ff3d08; }
+.preflight.p-fail { border-color: #ff6b6b44; background: #ff6b6b0a; }
+.preflight.p-warn { border-color: #ffb54744; background: #ffb5470a; }
+.pf-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+.pf-verdict { display: flex; gap: 8px; align-items: flex-start; margin: 0; font-size: 14px; font-weight: 600; line-height: 1.45; min-width: 0; flex: 1 1 220px; }
+.pf-verdict .icon { flex: none; margin-top: 2px; }
+.p-pass .pf-verdict .icon { color: var(--lime); }
+.p-fail .pf-verdict .icon { color: var(--red); }
+.p-warn .pf-verdict .icon { color: var(--amber); }
+.pf-list { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; }
+.pf-row { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 9px 10px; border-radius: 10px; background: #ffffff05; border: 1px solid #ffffff0a; }
+.pf-row .v-icon { width: 24px; height: 24px; border-radius: 7px; }
+.pf-body { min-width: 0; }
+.pf-label { margin: 1px 0 0; font-size: 13.5px; font-weight: 600; color: var(--text); overflow-wrap: anywhere; }
+.pf-detail { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.45; overflow-wrap: anywhere; }
+.pf-code { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; padding: 3px 6px; border-radius: 6px; margin-top: 2px; max-width: 132px; overflow-wrap: anywhere; text-align: right; }
+.pf-code.pass { color: var(--lime); background: #c6ff3d12; }
+.pf-code.fail { color: #ff9a9a; background: #ff6b6b14; }
+.pf-code.none { color: var(--muted); background: #ffffff08; }
+.pf-found { margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pf-foot { margin: 12px 0 0; line-height: 1.5; }
+.preflight-loading { display: flex; align-items: center; gap: 8px; margin: 12px 0 0; }
+.claim-form .preflight { margin-bottom: 4px; }
+
+/* ---- embed badge */
+.embed-preview { display: inline-block; margin: 4px 0 12px; padding: 10px; border-radius: 10px; background: #fff; line-height: 0; max-width: 100%; }
+.embed-preview img { max-width: 100%; height: auto; }
+.embed-row { margin-top: 10px; min-width: 0; }
+.embed-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.field-label-text { font-size: 12.5px; font-weight: 600; color: var(--text-2); }
+.embed-code { margin: 6px 0 0; font-size: 11.5px; max-height: 140px; overflow: auto; }
+.embed .btn.copy.xs { padding: 4px 9px; font-size: 12px; }
+@media (max-width: 640px) {
+  .pc-fields { grid-template-columns: minmax(0, 1fr); }
+}
+
 /* ---- how it works page */
 .how { animation: rise .45s ease both; }
 .how .section-title { margin-bottom: 22px; }
